@@ -5,7 +5,7 @@ from os import getenv
 load_dotenv()
 RAPID_KEY = getenv("RAPID_KEY")
 
-def download(instagram_url):  # ← bu yerda parametr qo‘shildi
+def download_instagram(instagram_url):  # ← bu yerda parametr qo‘shildi
     url = "https://instagram-downloader-download-instagram-stories-videos4.p.rapidapi.com/convert"
 
     querystring = {"url": instagram_url}
