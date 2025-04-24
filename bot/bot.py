@@ -9,17 +9,11 @@ from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, FSInputFile, BotCommand
 from dotenv import load_dotenv
-from requests import session
 
-from utils import download
-
-from aiogram.client.session.aiohttp import AiohttpSession
-
-session = AiohttpSession(proxy="http://proxy.server:3128")
+from utils import download, download_instagram
 
 # Muhit o'zgaruvchilarini yuklash
 load_dotenv()
-
 # Bot tokenini muhit o'zgaruvchilaridan olish
 TOKEN = getenv("BOT_TOKEN")
 
@@ -29,6 +23,8 @@ dp = Dispatcher()
 # Media URL larini saqlash uchun lug'at
 media_storage = {}
 
+session = AiohttpSession(proxy="http://proxy.server:3128")
+
 # Bot menyusiga buyruqlarni o'rnatish funksiyasi
 async def set_bot_commands(bot: Bot):
     commands = [
@@ -36,8 +32,6 @@ async def set_bot_commands(bot: Bot):
         BotCommand(command="/help", description="Bot haqida yordam"),
     ]
     await bot.set_my_commands(commands)
-
-    bot = Bot(token=TOKEN, session=session)
 
 # /start buyrug'i uchun ishlovchi
 @dp.message(Command("start"))
@@ -68,7 +62,7 @@ async def command_help_handler(message: Message) -> None:
 async def download_handler(message: Message):
     if message.text:
         # Instagramdan ma'lumotlarni API orqali olish
-        result = download(message.text)
+        result = download_instagram(link=message.text)
         if result.get("media"):
             url = result["media"][0].get("url")
             # Noyob identifikator yaratish
@@ -128,8 +122,9 @@ async def process_download_callback(callback: CallbackQuery):
 
 # Botni ishga tushirish
 async def main() -> None:
+
     # Botni ishga tushirish
-    bot = Bot(token=TOKEN)
+    bot = Bot(token=TOKEN, session=session)
     # Bot buyruqlarini o'rnatish
     await set_bot_commands(bot)
     # Xabarlarni qayta ishlashni boshlash
