@@ -5,16 +5,21 @@ from uuid import uuid4  # Noyob identifikatorlar yaratish uchun
 
 import requests
 from aiogram import Bot, Dispatcher, html, F
+from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, FSInputFile, BotCommand
 from dotenv import load_dotenv
+from requests import session
 
 from utils import download
 
+from aiogram.client.session.aiohttp import AiohttpSession
 
+session = AiohttpSession(proxy="http://proxy.server:3128")
 
 # Muhit o'zgaruvchilarini yuklash
 load_dotenv()
+
 # Bot tokenini muhit o'zgaruvchilaridan olish
 TOKEN = getenv("BOT_TOKEN")
 
@@ -31,6 +36,8 @@ async def set_bot_commands(bot: Bot):
         BotCommand(command="/help", description="Bot haqida yordam"),
     ]
     await bot.set_my_commands(commands)
+
+    bot = Bot(token=TOKEN, session=session)
 
 # /start buyrug'i uchun ishlovchi
 @dp.message(Command("start"))
