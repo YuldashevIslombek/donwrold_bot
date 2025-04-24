@@ -5,6 +5,7 @@ from uuid import uuid4  # Noyob identifikatorlar yaratish uchun
 
 import requests
 from aiogram import Bot, Dispatcher, html, F
+from aiogram.client import session
 from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, FSInputFile, BotCommand
@@ -62,7 +63,7 @@ async def command_help_handler(message: Message) -> None:
 async def download_handler(message: Message):
     if message.text:
         # Instagramdan ma'lumotlarni API orqali olish
-        result = download_instagram(link=message.text)
+        result = download_instagram(message.text)
         if result.get("media"):
             url = result["media"][0].get("url")
             # Noyob identifikator yaratish
@@ -120,16 +121,22 @@ async def process_download_callback(callback: CallbackQuery):
         await callback.answer()
 
 
-# Botni ishga tushirish
-async def main() -> None:
+# # Botni ishga tushirish
+# async def main() -> None:
+#
+#     # Botni ishga tushirish
+#     bot = Bot(token=TOKEN, session=session)
+#     # Bot buyruqlarini o'rnatish
+#     await set_bot_commands(bot)
+#     # Xabarlarni qayta ishlashni boshlash
+#     await dp.start_polling(bot)
 
-    # Botni ishga tushirish
-    bot = Bot(token=TOKEN, session=session)
-    # Bot buyruqlarini o'rnatish
-    await set_bot_commands(bot)
-    # Xabarlarni qayta ishlashni boshlash
-    await dp.start_polling(bot)
 
+async def main():
+    async with AiohttpSession() as session:
+        bot = Bot(token=TOKEN, session=session)
+        await set_bot_commands(bot)
+        await dp.start_polling(bot)
 
 if __name__ == "__main__":
     print("Bot ishga tushmoqda...")
