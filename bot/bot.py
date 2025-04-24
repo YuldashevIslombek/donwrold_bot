@@ -10,7 +10,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, FSInputFile, BotCommand
 from dotenv import load_dotenv
 
-from utils import download, download_instagram
+from utils import download
 
 # Muhit o'zgaruvchilarini yuklash
 load_dotenv()
@@ -62,7 +62,7 @@ async def command_help_handler(message: Message) -> None:
 async def download_handler(message: Message):
     if message.text:
         # Instagramdan ma'lumotlarni API orqali olish
-        result = download_instagram(link=message.text)
+        result = download(link=message.text)
         if result.get("media"):
             url = result["media"][0].get("url")
             # Noyob identifikator yaratish
