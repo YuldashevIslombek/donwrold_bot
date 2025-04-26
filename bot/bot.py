@@ -4,8 +4,7 @@ from os import getenv
 from uuid import uuid4  # Noyob identifikatorlar yaratish uchun
 
 import requests
-from aiogram import Bot, Dispatcher, html, F
-from aiogram.client import session
+from aiogram import Bot, Dispatcher, F
 from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, FSInputFile, BotCommand
