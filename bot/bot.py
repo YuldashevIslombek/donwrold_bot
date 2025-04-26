@@ -120,22 +120,16 @@ async def process_download_callback(callback: CallbackQuery):
         await callback.answer()
 
 
-# # Botni ishga tushirish
-# async def main() -> None:
-#
-#     # Botni ishga tushirish
-#     bot = Bot(token=TOKEN, session=session)
-#     # Bot buyruqlarini o'rnatish
-#     await set_bot_commands(bot)
-#     # Xabarlarni qayta ishlashni boshlash
-#     await dp.start_polling(bot)
+# Botni ishga tushirish
+async def main() -> None:
 
+    # Botni ishga tushirish
+    bot = Bot(token=TOKEN, session=session)
+    # Bot buyruqlarini o'rnatish
+    await set_bot_commands(bot)
+    # Xabarlarni qayta ishlashni boshlash
+    await dp.start_polling(bot)
 
-async def main():
-    async with AiohttpSession() as session:
-        bot = Bot(token=TOKEN, session=session)
-        await set_bot_commands(bot)
-        await dp.start_polling(bot)
 
 if __name__ == "__main__":
     print("Bot ishga tushmoqda...")
