@@ -10,7 +10,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, FSInputFile, BotCommand
 from dotenv import load_dotenv
 
-from utils import download_instagram
+from handlears.utils import download_instagram
 
 # Muhit o'zgaruvchilarini yuklash
 load_dotenv()
